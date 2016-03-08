@@ -9,6 +9,7 @@ setup(
     author='Bogdan Radko',
     author_email='bodja.rules@gmail.com',
     install_requires=[
+        'django',
         'gcloud == 0.11.0'
     ],
     license='MIT',

@@ -1,7 +1,10 @@
+import six
 import StringIO
 import mimetypes
+
 from django.conf import settings
 from django.core.files.storage import Storage
+
 from gcloud import storage, exceptions
 
 
@@ -38,7 +41,7 @@ class GoogleCloudStorage(Storage):
 
     def _open(self, name):
         """
-        Writes blob contents into in-memory file and returns `StringIO` instance
+        Returns `StringIO` instance with blob file contents
         """
         output = StringIO.StringIO()
         self.bucket.get_blob(name).download_to_file(output)
@@ -49,7 +52,7 @@ class GoogleCloudStorage(Storage):
         if hasattr(content, 'content_type'):
             content_type = content.content_type
         else:
-            content_type = mimetypes.guess_type(name)
+            content_type = mimetypes.guess_type(name)[0]
         blob.cache_control = settings.GOOGLE_CLOUD_STORAGE.get('cache_control')
         blob.upload_from_file(content, True, content.size, content_type)
         blob.make_public()
@@ -78,4 +81,10 @@ class GoogleCloudStorage(Storage):
         return self.bucket.blob(name).updated
 
     def url(self, name):
-        return self.bucket.blob(name).public_url
+        """
+        Unquote and quote to not have escaped slashes in url.
+        """
+        quote = six.moves.urllib.parse.quote
+        unquote = six.moves.urllib.parse.unquote
+        url, name = unquote(self.bucket.blob(name).public_url).rsplit('/', 1)
+        return '{}/{}'.format(url, quote(name, safe=''))
