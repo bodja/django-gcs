@@ -2,10 +2,10 @@ import six
 import StringIO
 import mimetypes
 
-from django.conf import settings
 from django.core.files.storage import Storage
-
 from gcloud import storage, exceptions
+
+from .settings import gcs_settings as settings
 
 
 class GoogleCloudStorage(Storage):
@@ -28,15 +28,13 @@ class GoogleCloudStorage(Storage):
                      Client init will fail
                      if not passed and no `credentials` provided
         """
-        bucket = bucket or settings.GOOGLE_CLOUD_STORAGE.get('bucket')
-        project = project or settings.GOOGLE_CLOUD_STORAGE.get('project', '')
-        credentials = credentials or settings.GOOGLE_CLOUD_STORAGE.get(
-            'credentials')
-        http = http or settings.GOOGLE_CLOUD_STORAGE.get('http')
+        bucket = bucket or settings['bucket']
+        project = project or settings['project']
+        credentials = credentials or settings['credentials']
+        http = http or settings['http']
         if callable(http):
             http = http()
-        client = storage.Client(project=project, credentials=credentials,
-                                http=http)
+        client = storage.Client(project, credentials, http)
         self.bucket = client.get_bucket(bucket)
 
     def _open(self, name):
