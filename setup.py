@@ -13,4 +13,6 @@ setup(
     install_requires=[
         'gcloud == 0.11.0'
     ],
+    license='MIT',
+    url='https://github.com/bodja/django-gcs'
 )
