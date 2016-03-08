@@ -14,7 +14,7 @@ setup(
     ],
     license='MIT',
     url='https://github.com/bodja/django-gcs',
-    download_url='https://github.com/bodja/django-gcs/tarball/0.1',
+    download_url='https://github.com/bodja/django-gcs/tarball/0.1.0',
     keywords=['django', 'storage', 'gcs', 'google cloud storage'],
     classifiers=[]
 )
