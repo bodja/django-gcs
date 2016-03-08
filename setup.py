@@ -4,7 +4,7 @@ from setuptools import setup
 setup(
     name='django-gcs',
     packages=['django_gcs'],
-    version='0.1',
+    version='0.1.0',
     description='Django file storage backend for Google Cloud Storage',
     author='Bogdan Radko',
     author_email='bodja.rules@gmail.com',
