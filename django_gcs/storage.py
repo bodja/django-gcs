@@ -51,8 +51,11 @@ class GoogleCloudStorage(Storage):
             content_type = content.content_type
         else:
             content_type = mimetypes.guess_type(name)[0]
-        blob.cache_control = settings.GOOGLE_CLOUD_STORAGE.get('cache_control')
         blob.upload_from_file(content, True, content.size, content_type)
+
+        blob.cache_control = ', '.join(settings['cache_control'])
+        blob.patch()  # submit cache_control
+
         blob.make_public()
         return name
 

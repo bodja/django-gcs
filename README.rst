@@ -32,13 +32,15 @@ Settings
         'bucket': None,
         'project': '',
         'credentials': None,
-        'http': None
+        'http': None,
+        'cache_control': ['no-cache']
     }
 
 * ``bucket`` name of the bucket on google cloud storage.
 * ``project`` google project name (not required).
 * ``credentials`` oauth2 credentials
 * ``http`` httplib2.Http instance or callable that returns httplib2.Http instance
+* ``cache_control`` is a list of strings. By default ['no-cache']
 
 *Note: One of* ``credentials`` *or* ``http`` *should be provided for authentication.*
 

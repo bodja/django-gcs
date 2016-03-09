@@ -5,7 +5,8 @@ DEFAULTS = {
     'bucket': None,
     'project': '',
     'credentials': None,
-    'http': None
+    'http': None,
+    'cache_control': ['no-cache']
 }
 
 
