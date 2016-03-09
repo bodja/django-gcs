@@ -23,19 +23,6 @@ Update ``settings.py``
         'http': get_http_credentials
     }
 
-If you decided to use google oauth2 credentials file like as you see above take a look on example below:
-
-.. code:: python
-
-    import pickle
-    import httplib2
-
-    def get_http_credentials():
-        with open('google/oauth2/credentials/file', 'r') as f:
-            credentials = pickle.load(f)
-            http_credentials = credentials.authorize(httplib2.Http())
-        return http_credentials
-
 Settings
 --------
 
@@ -72,3 +59,16 @@ Or per model:
 
     class FileModel(models.Model):
         file = models.ImageField(storage=GoogleCloudStorage(bucket='some-bucket'))
+
+Example how to generate HTTP object to make request.
+
+.. code:: python
+
+    import pickle
+    import httplib2
+
+    def get_http_credentials():
+        with open('google/oauth2/credentials/file', 'r') as f:
+            credentials = pickle.load(f)
+            http_credentials = credentials.authorize(httplib2.Http())
+        return http_credentials
